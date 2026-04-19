@@ -14,7 +14,11 @@
                 document.getElementById("status").textContent = "Geolocation is not supported by your browser";
                 return;
             } 
-            navigator.geolocation.getCurrentPosition(success, error);
+            navigator.geolocation.getCurrentPosition(success, error, {
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 0
+            });
         }
 
         function success(position) {
