@@ -10,9 +10,9 @@
         function getLocation() {
             if (!navigator.geolocation) {
                 console.error("Geolocation is not supported by your browser");
-            } else {
-                navigator.geolocation.getCurrentPosition(success, error);
-            }
+                return;
+            } 
+            navigator.geolocation.getCurrentPosition(success, error);
         }
 
         function success(position) {
@@ -23,7 +23,7 @@
             console.error("Unable to retrieve your location (Did you deny permission?)");
         }
 
-        window.addEventListener("load", getLocation);
+        getLocation();
     </script>
 </body>
 </html>
