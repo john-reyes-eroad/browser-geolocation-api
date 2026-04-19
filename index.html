@@ -29,34 +29,10 @@
             console.log(`Latitude: ${latitude}`);
             console.log(`Longitude: ${longitude}`);
             console.log(`Accuracy: ${position.coords.accuracy} meters`);
-
-            const readableLocation = await reverseGeocode(latitude, longitude);
-            console.log(`Readable location: ${readableLocation}`);
         }
 
         function error() {
             statusElement.textContent = "Unable to retrieve your location (Did you deny permission?)";
-        }
-
-        async function reverseGeocode(latitude, longitude) {
-            try {
-                const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
-                const response = await fetch(url, {
-                    headers: {
-                        Accept: "application/json"
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-
-                const data = await response.json();
-                return data.display_name || "Location found, but no readable address was returned.";
-            } catch (err) {
-                console.error("Reverse geocoding failed:", err);
-                return "Got coordinates, but could not convert to a readable address.";
-            }
         }
     </script>
 </body>
