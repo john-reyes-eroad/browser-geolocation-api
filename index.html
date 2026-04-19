@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Logger</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f2f5; }
+        .card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+        button { padding: 10px 20px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Geolocation Tracker</h2>
+        <p>Check the browser console to see the logs.</p>
+        <button onclick="getLocation()">Enable Location</button>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        function getLocation() {
+            const status = document.getElementById('status');
+
+            if (!navigator.geolocation) {
+                status.textContent = "Geolocation is not supported by your browser";
+            } else {
+                status.textContent = "Locating…";
+                // requestCurrentPosition triggers the browser permission popup
+                navigator.geolocation.getCurrentPosition(success, error);
+            }
+        }
+
+        function success(position) {
+            const latitude  = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            status.textContent = `Success! Check console.`;
+            
+            // Logging the result to the browser log
+            console.log("--- Location Found ---");
+            console.log(`Latitude: ${latitude}`);
+            console.log(`Longitude: ${longitude}`);
+            console.log(`Accuracy: ${position.coords.accuracy} meters`);
+        }
+
+        function error() {
+            status.textContent = "Unable to retrieve your location (Did you deny permission?)";
+        }
+    </script>
+</body>
+</html>
