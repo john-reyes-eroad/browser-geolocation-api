@@ -6,10 +6,12 @@
     <title>Location Logger</title>
 </head>
 <body>
+    <p id="status">Getting your location...</p>
     <script>
         function getLocation() {
             if (!navigator.geolocation) {
                 console.error("Geolocation is not supported by your browser");
+                document.getElementById("status").textContent = "Geolocation is not supported by your browser";
                 return;
             } 
             navigator.geolocation.getCurrentPosition(success, error);
@@ -17,10 +19,15 @@
 
         function success(position) {
             console.log(position);
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const accuracy = position.coords.accuracy;
+            document.getElementById("status").textContent = `Latitude: ${lat}, Longitude: ${lng}, Accuracy: ${accuracy} meters`;
         }
 
         function error() {
             console.error("Unable to retrieve your location (Did you deny permission?)");
+            document.getElementById("status").textContent = "Unable to retrieve your location (Did you deny permission?)";
         }
 
         getLocation();
